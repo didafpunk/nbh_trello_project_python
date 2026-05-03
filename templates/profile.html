@@ -1,24 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Mon profil</h2>
-<form method="POST">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.fullname.label }}<br>
-        {{ form.fullname(size=32) }}
-        {% for error in form.fullname.errors %}
-            <span style="color: red;">{{ error }}</span>
-        {% endfor %}
+<div class="max-w-2xl mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">Mon profil</h1>
+    <div class="bg-white shadow rounded-lg p-6">
+        <p><strong>Nom complet :</strong> {{ user.fullname }}</p>
+        <p><strong>Email :</strong> {{ user.mail }}</p>
+        <div class="mt-4">
+            <a href="{{ url_for('user.edit_profile') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Modifier mon profil</a>
+            <a href="{{ url_for('user.change_password') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 ml-2">Changer mon mot de passe</a>
+        </div>
     </div>
-    <div>
-        {{ form.mail.label }}<br>
-        {{ form.mail(size=32) }}
-        {% for error in form.mail.errors %}
-            <span style="color: red;">{{ error }}</span>
-        {% endfor %}
-    </div>
-    <div>{{ form.submit() }}</div>
-</form>
-<p><a href="{{ url_for('user.change_password') }}">Changer mon mot de passe</a></p>
+</div>
 {% endblock %}

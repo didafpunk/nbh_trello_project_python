@@ -2,30 +2,38 @@ from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import login_required, current_user
 from extensions import db
 from forms import ProfileForm, ChangePasswordForm
-from werkzeug.security import generate_password_hash
-
+from werkzeug.security import generate_password_hash,check_password_hash
+from hashlib import md5
+from utils.password import verify_password
 user_bp = Blueprint('user', __name__, url_prefix='/user')
 
-# Vérification du mot de passe (hash MD5 salé)
-def verify_password(plain, hashed):
-    import hashlib
-    prefix = "vJemLnU3"
-    suffix = "QUaLtRs7"
-    salted = prefix + plain + suffix
-    computed = hashlib.md5(salted.encode()).hexdigest()
-    return computed == hashed
 
-@user_bp.route('/profile', methods=['GET', 'POST'])
+
+
+@user_bp.route('/profile',methods=['GET'])
 @login_required
 def profile():
+    return render_template('profile.html',user=current_user)
+
+@user_bp.route('/profile/edit', methods=['GET'])
+@login_required
+def edit_profile():
     form = ProfileForm(obj=current_user)
+    return render_template('profile_edit.html', form=form)
+
+@user_bp.route('/profile/update', methods=['POST'])
+@login_required
+def update_profile():
+    form = ProfileForm()
     if form.validate_on_submit():
         current_user.fullname = form.fullname.data
         current_user.mail = form.mail.data
         db.session.commit()
         flash('Profil mis à jour', 'success')
         return redirect(url_for('user.profile'))
-    return render_template('profile.html', form=form)
+    return redirect(url_for('user.edit_profile'))
+
+
 
 @user_bp.route('/change-password', methods=['GET', 'POST'])
 @login_required

@@ -7,25 +7,14 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 from forms import LoginForm 
 from forms import SignupForm 
-
+from utils.password import verify_password 
 auth_bp = Blueprint('auth', __name__)
 
 
 
-def verify_password(plain, hashed):
-    # Hash MD5 salé (anciens utilisateurs PHP)
-    prefix = "vJemLnU3"
-    suffix = "QUaLtRs7"
-    salted = prefix + plain + suffix
-    md5_hash = hashlib.md5(salted.encode()).hexdigest()
-    
-    if hashed == md5_hash:
-        return True
-    
-    # Hash Werkzeug (nouveaux utilisateurs Flask)
-    return check_password_hash(hashed, plain)
 
-from forms import LoginForm   # tout en haut
+
+
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
