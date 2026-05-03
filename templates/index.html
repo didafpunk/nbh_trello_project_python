@@ -1,6 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Bienvenue sur NBH Trello Python</h2>
-<p>Connectez-vous pour accéder à votre tableau de bord.</p>
+<div class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-[80vh] flex items-center">
+    <div class="container mx-auto px-4 py-16">
+        <div class="flex flex-col items-center text-center">
+            <div class="mb-8">
+                <img class="w-32 h-auto mx-auto" src="{{ url_for('static', filename='img/trello_by_nbh_logo.png') }}" alt="NBH Trello">
+            </div>
+            <h1 class="text-5xl font-bold text-gray-900 mb-4">
+                NBH Trello 
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl">
+                Un clone de Trello moderne, construit en Python, avec Flask et Tailwind CSS. 
+                Gérez vos projets, vos tâches et collaborez en équipe.
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto mb-12">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-3xl mb-2">📋</div>
+                    <h3 class="font-bold text-lg mb-2">Boards</h3>
+                    <p class="text-gray-600">Créez et organisez vos projets personnels ou professionnels</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-3xl mb-2">📝</div>
+                    <h3 class="font-bold text-lg mb-2">Cartes</h3>
+                    <p class="text-gray-600">Ajoutez des tâches, des listes de contrôle et des échéances</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="text-3xl mb-2">👥</div>
+                    <h3 class="font-bold text-lg mb-2">Collaboration</h3>
+                    <p class="text-gray-600">Invitez des membres et travaillez en équipe</p>
+                </div>
+            </div>
+
+            <div class="space-x-4">
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('main.dashboard') }}" 
+                       class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                        Accéder à mon tableau de bord
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('auth.login') }}" 
+                       class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                        Se connecter
+                    </a>
+                    <a href="{{ url_for('auth.signup') }}" 
+                       class="inline-block bg-gray-200 text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition duration-300">
+                        S'inscrire
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
