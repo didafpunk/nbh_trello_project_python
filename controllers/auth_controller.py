@@ -4,6 +4,7 @@ from models.user import User
 from extensions import db
 import hashlib
 from werkzeug.security import check_password_hash
+from werkzeug.security import generate_password_hash
 from forms import LoginForm 
 from forms import SignupForm 
 
