@@ -1,6 +1,51 @@
-<form method="POST">
-    <input type="email" name="mail" placeholder="Email" required><br>
-    <input type="text" name="fullname" placeholder="Nom complet" required><br>
-    <input type="password" name="password" placeholder="Mot de passe" required><br>
-    <button type="submit">S'inscrire</button>
-</form>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center">
+    <div class="max-w-md w-full space-y-8 p-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700 transition-all duration-300 hover:shadow-3xl">
+        <div>
+            <img class="mx-auto w-48 h-auto" src="{{ url_for('static', filename='img/trello_by_nbh_logo.png') }}" alt="NBH Logo">
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">Inscription</h2>
+            <p class="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+                Ou
+                <a href="{{ url_for('auth.login') }}" class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400">connectez-vous</a>
+            </p>
+        </div>
+
+        <form class="mt-8 space-y-6" method="POST">
+            {{ form.hidden_tag() }}
+
+            <div class="space-y-4 rounded-md shadow-sm">
+                <div>
+                    {{ form.mail(class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out", placeholder="Adresse email") }}
+                    {% for error in form.mail.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.fullname(class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out", placeholder="Nom complet") }}
+                    {% for error in form.fullname.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.password(class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out", placeholder="Mot de passe") }}
+                    {% for error in form.password.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.confirm(class="appearance-none rounded-lg relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white dark:bg-gray-700 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm transition duration-150 ease-in-out", placeholder="Confirmer le mot de passe") }}
+                    {% for error in form.confirm.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div>
+                {{ form.submit(class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out transform hover:scale-[1.02]") }}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
